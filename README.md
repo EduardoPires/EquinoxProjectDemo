@@ -26,11 +26,11 @@ To know more about how to setup your enviroment visit the [Microsoft .NET Downlo
 
 ## Technologies implemented:
 
-- ASP.NET 9.0
+- ASP.NET 10.0
  - ASP.NET MVC Core 
  - ASP.NET WebApi Core with JWT Bearer Authentication
  - ASP.NET Identity Core
-- Entity Framework Core 9.0
+- Entity Framework Core 10.0
 - Custom Automatic Mapping (no more AutoMapper)
 - FluentValidator
 - NetDevPack.SimpleMediator (no more MediatR)

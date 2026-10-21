@@ -1,6 +1,6 @@
 # AGENTS Setup Guide
 
-This repository requires specific environment configuration to build and run .NET 9.0 projects. **All dependencies must be installed during the setup script phase,** especially in restricted environments (e.g., OpenAI Codex).
+This repository requires specific environment configuration to build and run .NET 10.0 projects. **All dependencies must be installed during the setup script phase,** especially in restricted environments (e.g., OpenAI Codex).
 
 ## Setup Steps (`setup.sh`)
 
@@ -22,9 +22,9 @@ This repository requires specific environment configuration to build and run .NE
     
     `apt-get update`
     
-4. **Install .NET SDK 9.0:**
+4. **Install .NET SDK 10.0:**
     
-    `apt-get install -y dotnet-sdk-9.0`
+    `apt-get install -y dotnet-sdk-10.0`
     
 5. **Verify installation:**
     
