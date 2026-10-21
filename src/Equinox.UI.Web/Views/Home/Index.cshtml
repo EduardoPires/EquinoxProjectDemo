@@ -5,7 +5,37 @@
 <div>
     <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
     <p>Estudado e alterado com o Claude Code.</p>
-    <br /><br />
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Clientes</h5>
+                    <p class="card-text">Cadastro, edição e histórico de clientes, com as regras de negócio no domínio.</p>
+                    <a asp-area="" asp-controller="Customer" asp-action="Index" class="card-link">Ver a lista de clientes</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">API</h5>
+                    <p class="card-text">Os mesmos casos de uso expostos por uma API protegida por autenticação.</p>
+                    <a href="https://localhost:5001/swagger" target="_blank" class="card-link">Abrir a documentação da API</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Identity</h5>
+                    <p class="card-text">Registro, login e as permissões de quem usa o site.</p>
+                    <a asp-area="Identity" asp-page="/Account/Login" class="card-link">Ir para o login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
 </div>
 
 <div class="row">
