@@ -10,6 +10,12 @@ namespace Equinox.UI.Web.Controllers
             return View();
         }
 
+        [Route("sobre")]
+        public IActionResult About()
+        {
+            return View();
+        }
+
         [Route("error/{id:length(3,3)}")]
         public IActionResult Errors(int id)
         {
