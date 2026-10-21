@@ -27,11 +27,11 @@ To know more about how to setup your enviroment visit the [Microsoft .NET Downlo
 
 ## Technologies implemented:
 
-- ASP.NET Core 3.1 (with .NET Core 3.1)
+- ASP.NET Core 10.0 (with .NET 10.0)
  - ASP.NET MVC Core 
  - ASP.NET WebApi Core with JWT Bearer Authentication
  - ASP.NET Identity Core
-- Entity Framework Core 3.1
+- Entity Framework Core 10.0
 - .NET Core Native DI
 - AutoMapper
 - FluentValidator

@@ -1,0 +1,62 @@
+@{
+    ViewData["Title"] = "Sobre";
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>O Equinox Project é um projeto open-source de referência de arquitetura em .NET. Esta é uma versão de estudo, mantida por Eduardo Pires.</p>
+
+<h2>Funcionalidades</h2>
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Clientes</h5>
+                <p class="card-text">Cadastro, edição e exclusão de clientes, com o histórico de todas as alterações gravado por event sourcing.</p>
+                <a asp-area="" asp-controller="Customer" asp-action="Index" class="card-link">Ver a lista de clientes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">API</h5>
+                <p class="card-text">Os mesmos casos de uso expostos por uma Web API com autenticação JWT e documentação no Swagger.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Identity</h5>
+                <p class="card-text">Registro, login e controle de permissões por claims de quem usa o site.</p>
+                <a asp-area="Identity" asp-page="/Account/Login" class="card-link">Ir para o login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Arquitetura</h2>
+        <ul>
+            <li>Separação em camadas, SOLID e Clean Code</li>
+            <li>DDD - Domain Model Pattern</li>
+            <li>CQRS com MediatR</li>
+            <li>Event Sourcing</li>
+            <li>Validação de comandos com FluentValidation</li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h2>Tecnologias</h2>
+        <ul>
+            <li>.NET 10.0</li>
+            <li>ASP.NET MVC e Web API</li>
+            <li>ASP.NET Identity</li>
+            <li>EF Core</li>
+            <li>AutoMapper</li>
+            <li>FluentValidation</li>
+            <li>MediatR</li>
+            <li>Swagger UI</li>
+        </ul>
+    </div>
+</div>
