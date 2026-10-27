@@ -36,7 +36,7 @@ Usa SQL Server `(localdb)` e não roda migrations.
 - Textos da interface sempre em português.
 - Não adicione pacotes NuGet sem autorização.
 - Não faça commits sem pedido explícito. Quando pedido, mensagem e branch em português (`estudo/<tema>`, "Adiciona ..."). PRs vão para `master`.
-- Os projetos usam `net9.0` (README fala em .NET 10). O SDK 10 compila, mas rodar exige o runtime ASP.NET Core 9. Não mude o target sem pedido.
+- Os projetos usam `net10.0` (migração em `docs/migracao-net10.md`). Rodar exige o runtime ASP.NET Core 10. Não mude o target sem pedido.
 
 ## Antes de alterar
 
