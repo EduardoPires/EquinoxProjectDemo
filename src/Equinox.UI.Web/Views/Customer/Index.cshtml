@@ -109,23 +109,22 @@
                 //url: "http://equinoxproject.azurewebsites.net/customer-management/customer-history/" + customerId,
                 cache: false
             }).done(function(data) {
-                var formatHtml = "<table class='table table-striped'>";
-                formatHtml += "<thead><th>Action</th><th>When</th><th>Id</th><th>Name</th><th>E-mail</th><th>Birth Date</th><th>By User</th></thead>";
+                var table = $("<table class='table table-striped'>");
+                table.append("<thead><th>Action</th><th>When</th><th>Id</th><th>Name</th><th>E-mail</th><th>Birth Date</th><th>By User</th></thead>");
 
                 for (var i = 0; i < data.length; i++) {
                     var change = data[i];
-                    formatHtml += "<tr>";
-                    formatHtml += "<td>" + change.action + "</td>";
-                    formatHtml += "<td>" + change.timestamp + "</td>";
-                    formatHtml += "<td>" + change.id + "</td>";
-                    formatHtml += "<td>" + change.name + "</td>";
-                    formatHtml += "<td>" + change.email + "</td>";
-                    formatHtml += "<td>" + change.birthDate + "</td>";
-                    formatHtml += "<td>" + change.who + "</td>";
-                    formatHtml += "</tr>";
+                    $("<tr>")
+                        .append($("<td>").text(change.action))
+                        .append($("<td>").text(change.timestamp))
+                        .append($("<td>").text(change.id))
+                        .append($("<td>").text(change.name))
+                        .append($("<td>").text(change.email))
+                        .append($("<td>").text(change.birthDate))
+                        .append($("<td>").text(change.who))
+                        .appendTo(table);
                 }
-                formatHtml += "</table>";
-                $("#customerHistoryData").html(formatHtml);
+                $("#customerHistoryData").empty().append(table);
             });
         });
 </script>
