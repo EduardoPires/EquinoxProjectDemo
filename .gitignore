@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # SQLite databases gerados localmente
 *.db
+CLAUDE.local.md
