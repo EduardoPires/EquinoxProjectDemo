@@ -64,6 +64,6 @@ Ficaram **como estavam**, porque rodam em net10 e a migração não exige mudan�
   - `NuGet.Packaging`/`NuGet.Protocol` 6.12.1 (NU1901, baixa) vêm do `Microsoft.VisualStudio.Web.CodeGeneration.Design` 10.0.2.
   - Antes da migração, o build tinha 52 avisos desse tipo, por causa da Pkcs/Xml 9.0.3 diretas. Agora tem 24.
 - `src/Equinox.Services.Api/Properties/launchSettings.json`: `"dotnetRunMessages": "true"` está como string, e o SDK 10 descarta o perfil inteiro.
-- Dockerfiles: `EXPOSE 80/443` (a porta padrão é 8080 desde o .NET 8), e o `COPY` do site usa um caminho que não bate com o contexto `..\..`. Nenhum build de imagem foi feito.
+- Dockerfiles: o `COPY` do site usa um caminho que não bate com o contexto `..\..`. Nenhum build de imagem foi feito. (O `EXPOSE 80/443` virou `EXPOSE 8080`, a porta padrão da imagem desde o .NET 8.)
 - CI com `actions/checkout@v2` e `actions/setup-dotnet@v1`, que estão desatualizadas.
 - `Nullable` e `ImplicitUsings` variam entre os projetos.
