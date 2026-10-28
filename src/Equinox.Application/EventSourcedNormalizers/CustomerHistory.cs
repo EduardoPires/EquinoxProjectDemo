@@ -8,14 +8,12 @@ namespace Equinox.Application.EventSourcedNormalizers
 {
     public static class CustomerHistory
     {
-        public static IList<CustomerHistoryData> HistoryData { get; set; }
-
         public static IList<CustomerHistoryData> ToJavaScriptCustomerHistory(IList<StoredEvent> storedEvents)
         {
-            HistoryData = new List<CustomerHistoryData>();
-            CustomerHistoryDeserializer(storedEvents);
+            var historyData = new List<CustomerHistoryData>();
+            CustomerHistoryDeserializer(storedEvents, historyData);
 
-            var sorted = HistoryData.OrderBy(c => c.Timestamp);
+            var sorted = historyData.OrderBy(c => c.Timestamp);
             var list = new List<CustomerHistoryData>();
             var last = new CustomerHistoryData();
 
@@ -46,7 +44,7 @@ namespace Equinox.Application.EventSourcedNormalizers
             return list;
         }
 
-        private static void CustomerHistoryDeserializer(IEnumerable<StoredEvent> storedEvents)
+        private static void CustomerHistoryDeserializer(IEnumerable<StoredEvent> storedEvents, IList<CustomerHistoryData> history)
         {
             foreach (var e in storedEvents)
             {
@@ -73,7 +71,7 @@ namespace Equinox.Application.EventSourcedNormalizers
                         break;
 
                 }
-                HistoryData.Add(historyData);
+                history.Add(historyData);
             }
         }
     }

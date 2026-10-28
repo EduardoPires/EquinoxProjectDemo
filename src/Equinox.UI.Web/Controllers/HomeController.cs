@@ -23,8 +23,8 @@ namespace Equinox.UI.Web.Controllers
 
             if (id == 500)
             {
-                modelErro.Message = "An error has occurred! Please try again later or contact our support.";
-                modelErro.Title = "An error has occurred!";
+                modelErro.Message = "Não conseguimos concluir a sua solicitação. Tente de novo em instantes.";
+                modelErro.Title = "Algo deu errado";
                 modelErro.ErrorCode = id;
             }
             else if (id == 404)
