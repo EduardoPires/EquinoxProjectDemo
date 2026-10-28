@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>disable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Equinox.Domain\Equinox.Domain.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Azure.Identity" Version="1.13.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="9.0.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
+		<PackageReference Include="Azure.Identity" Version="1.17.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="10.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="10.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.14" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
