@@ -104,7 +104,7 @@ Leituras (`GET /customer`, `GET /customer/{id}`, `GET /customer/history/{id}`) s
 
 Nada disto foi executado; são pontos que o código sozinho não fecha.
 
-1. **API em Development:** o `EquinoxIdentityContext` usa `UseSqlite` em Development (`AspNetIdentityConfig.cs:42-46`), mas a connection string da API é de SQL Server (`appsettings.Development.json:3`). Pela leitura, login e cadastro na API falhariam nesse ambiente; não subi a API para confirmar.
+1. **API em Development:** **confirmado em 27/10/2026.** O `EquinoxIdentityContext` usa `UseSqlite` em Development (`AspNetIdentityConfig.cs:42-46`), mas a connection string da API é de SQL Server (`appsettings.Development.json:3`), e o login dá 500 (`Connection string keyword 'server' is not supported`). As rotas de clientes também dão 500, porque o banco `Equinox` não existe no LocalDB. A solução está no item 13 de `docs/melhorias.md`.
 2. **Esquema de autenticação padrão da API:** `AddIdentityApiEndpoints` registra um bearer próprio do Identity, e depois `AddJwtBearer` define o JWT como padrão (`AspNetIdentityConfig.cs:22-24`). Espero que o JWT vença e que os tokens de `/login` do `MapIdentityApi` não passem no `CustomerController`, mas não testei.
 3. **Como o banco SQL Server é criado:** só o site migra, e só em Development/Docker. As migrations do repositório foram geradas para SQLite (nomes `*_SQLite`). Não sei se aplicam em SQL Server ou se a ideia é usar `sql/GenerateDataBase.sql` (script de 2016, em UTF-16).
 4. **Ordem evento × cliente:** o evento é gravado num `SaveChanges` separado, antes do cliente (passo 6 do fluxo do site). Se a gravação do cliente falhar, o evento parece ficar órfão. O `Commit` do `CommandHandler` vem do pacote NetDevPack e não li o código dele.

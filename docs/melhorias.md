@@ -9,7 +9,7 @@ A coluna **Padrão** indica quando o item mexe em convenção do projeto (CQRS, 
 | Situação | Itens |
 |---|---|
 | Aceitas e aplicadas | 1, 2, 3 |
-| Adiadas para depois da migração de .NET | 4, 5, 6 |
+| **Próxima leva de correções** | **13 (prioridade máxima)**, depois 4, 5, 6 |
 | Adiadas sem prazo | 7, 8, 9 |
 | Recusadas | 10, 11, 12 |
 
@@ -21,7 +21,36 @@ A coluna **Padrão** indica quando o item mexe em convenção do projeto (CQRS, 
 | 2 | `src/Equinox.Application/EventSourcedNormalizers/CustomerHistory.cs:11` | `HistoryData` é estático e recriado a cada chamada (`:15`). Dois pedidos de histórico ao mesmo tempo misturam ou apagam a lista um do outro. | **Aplicada em 27/10/2026.** Usar uma lista local e passá-la ao desserializador. | Baixo | Médio: corrige um bug de concorrência | — |
 | 3 | `src/Equinox.UI.Web/Areas/Identity/Pages/Account/Login.cshtml.cs:84` | Com `lockoutOnFailure: false`, o login do site aceita tentativas de senha sem limite. A API já usa `true` (`src/Equinox.Services.Api/Controllers/AccountController.cs:61`). | **Aplicada em 27/10/2026.** Passar `true`. O usuário de seed tem `LockoutEnabled = false` e continua sem bloqueio. | Baixo: bloqueia por 5 min depois de 5 erros | Médio: segura ataque de força bruta | Identity |
 
-## Adiadas para depois da migração de .NET
+## Próxima leva de correções
+
+A migração para o .NET 10 foi concluída em 27/10/2026 (`docs/migracao-net10.md`). Por isso os itens 4, 5 e 6, adiados até ela, entram nesta leva. O **item 13 tem prioridade máxima** e é o primeiro a ser feito.
+
+### 13. A API não funciona com banco em Development (prioridade máxima)
+
+Diferente do resto da triagem, este item foi **confirmado rodando a API** (`dotnet watch --no-launch-profile`, já em .NET 10) em 27/10/2026. Hoje, em Development, só o Swagger e as respostas 401 funcionam. A causa vem de antes da migração e não tem relação com o .NET 10. Os dois erros:
+
+| Chamada | Resposta | Erro no log | Causa |
+|---|---|---|---|
+| `GET /customer` (e qualquer rota de clientes) | 500 | `Cannot open database "Equinox" requested by the login` | Clientes e eventos usam sempre SQL Server (`src/Equinox.Services.Api/Configurations/DatabaseConfig.cs:12-16`), com `(localdb)` e `Database=Equinox` (`src/Equinox.Services.Api/appsettings.Development.json:3`). Ninguém cria esse banco: a API não roda migrations, e o site, em Development, usa SQLite. No LocalDB desta máquina só existem os bancos de sistema e um `DevXpert`. |
+| `POST /account/enter` (login) | 500 | `Connection string keyword 'server' is not supported` | Em Development, o Identity usa SQLite (`src/Equinox.Infra.CrossCutting.Identity/Configuration/AspNetIdentityConfig.cs:42-46`), mas recebe a mesma connection string de SQL Server da API. É o ponto 1 de "O que eu ainda não sei" em `docs/arquitetura.md`, agora confirmado. |
+
+**Como resolver (recomendado):** na API, usar SQLite em Development, como o site já faz.
+
+1. Em `src/Equinox.Services.Api/Configurations/DatabaseConfig.cs`, repetir o padrão de `src/Equinox.UI.Web/Configurations/DatabaseConfig.cs:12-22`: `UseSqlite` para `EquinoxContext` e `EventStoreSqlContext` quando `builder.Environment.IsDevelopment()`, e `UseSqlServer` nos outros ambientes.
+2. Em `src/Equinox.Services.Api/appsettings.Development.json`, trocar a `DefaultConnection` por `Data Source=../Equinox.UI.Web/EquinoxProject.db`. O caminho é relativo à pasta do projeto, que é onde o `dotnet watch` roda. Assim os três contextos (clientes, eventos e Identity) usam o mesmo arquivo do site, que já vem migrado e com o seed, e o site e a API mostram os mesmos dados.
+3. Atualizar o `CLAUDE.md`, que hoje diz que a API "usa SQL Server `(localdb)`".
+4. Testar: subir o site uma vez (ele cria o banco), subir a API, fazer login em `POST /account/enter` com o usuário de seed e chamar `GET /customer` e `POST /customer` com o token.
+
+Não precisa de pacote NuGet novo: o `Microsoft.EntityFrameworkCore.Sqlite` já chega à API pelo projeto Identity (`src/Equinox.Infra.CrossCutting.Identity/Equinox.Infra.CrossCutting.Identity.csproj:16`). Staging e Production não mudam e continuam em SQL Server.
+
+- **Risco:** baixo, só mexe na configuração de Development da API. Depende de o site ter subido antes pelo menos uma vez.
+- **Ganho:** alto. A API passa a funcionar localmente, inclusive o fluxo com JWT, que hoje não dá para testar.
+
+**Por que não as outras saídas:**
+- **Criar o banco no LocalDB com as migrations:** não funciona. As migrations do repositório são de SQLite (colunas `TEXT`/`INTEGER` e `Sqlite:Autoincrement`, em `src/Equinox.Infra.Data/Migrations/` e `src/Equinox.Infra.CrossCutting.Identity/Migrations/`).
+- **Criar o banco com `sql/GenerateDataBase.sql`:** o script é de 2016 e está em UTF-16. As tabelas batem com o modelo atual pelo nome, mas o script não foi testado. Além disso, só resolve o primeiro erro: o login continuaria quebrado, porque o Identity usa SQLite em Development. Para consertar isso, seria preciso mudar o `AddIdentityDbContext`, que é compartilhado com o site (que precisa de SQLite).
+
+## Adiadas para depois da migração de .NET (entram na próxima leva, depois do 13)
 
 | # | Onde | Problema | O que fazer | Risco | Ganho | Padrão |
 |---|---|---|---|---|---|---|
@@ -51,7 +80,7 @@ Motivo da recusa não registrado.
 
 Pontos vistos na revisão que não entraram na lista dos 12:
 
-- Os Dockerfiles usam imagens `6.0` (`src/Equinox.UI.Web/Dockerfile:3,8`). Entram na migração de .NET.
+- Os Dockerfiles usavam imagens `6.0` (`src/Equinox.UI.Web/Dockerfile:3,8`). Passaram para `10.0` na migração de 27/10/2026.
 - Não há testes de unidade, só de arquitetura. Um projeto de testes com mocks precisaria de pacote NuGet novo, o que pede autorização.
 - Excluir um cliente que não existe quebra a view (`src/Equinox.UI.Web/Controllers/CustomerController.cs:101-102`).
 - `GetUserEmail` procura a claim `sub` antes do e-mail (`src/Equinox.Infra.CrossCutting.Identity/Extensions/ClaimsPrincipalExtensions.cs:29`). Hoje funciona por acaso, porque o JwtBearer renomeia o `sub`.

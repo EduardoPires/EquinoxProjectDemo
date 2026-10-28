@@ -55,7 +55,7 @@ Ficaram **como estavam**, porque rodam em net10 e a migração não exige mudan�
 - `dotnet build`: sem erros e sem avisos de compilação (CS/ASP). Os avisos que restam são de auditoria do NuGet; veja "Pendências".
 - `dotnet test`: 7 de 7 testes de arquitetura passando em net10.0.
 - Site (`dotnet watch`, SQLite): subiu em https://localhost:61666, e o seed aplicou as migrations. `/`, `/sobre`, a lista de clientes, o login e `/error/404` responderam 200. Com um usuário registrado só para o teste, funcionaram cadastro, edição, detalhes e histórico de cliente (eventos `Registered` e `Updated`).
-- API (`dotnet watch --no-launch-profile`, SQL Server LocalDB): subiu em https://localhost:5001. `/swagger` e `swagger.json` responderam 200, e `POST /customer` sem token respondeu 401. `GET /customer` respondeu 500 com `Cannot open database "Equinox" requested by the login`: o banco não existe no LocalDB desta máquina, porque a API não roda migrations (ver `docs/arquitetura.md`, "O que eu ainda não sei", item 3). Isso não foi corrigido e não tem relação com a migração.
+- API (`dotnet watch --no-launch-profile`, SQL Server LocalDB): subiu em https://localhost:5001. `/swagger` e `swagger.json` responderam 200, e `POST /customer` sem token respondeu 401. `GET /customer` respondeu 500 com `Cannot open database "Equinox" requested by the login`: o banco não existe no LocalDB desta máquina, porque a API não roda migrations (ver `docs/arquitetura.md`, "O que eu ainda não sei", item 3). Isso não foi corrigido e não tem relação com a migração. Está documentado, com a solução, no item 13 de `docs/melhorias.md`, com prioridade máxima.
 
 ## Pendências (fora do escopo, não alteradas)
 
